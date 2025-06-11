@@ -1,5 +1,3 @@
-/** @type {import('next').NextConfig} */
-
 const nextConfig = {
   reactStrictMode: true,
   eslint: {
@@ -20,7 +18,6 @@ const nextConfig = {
       },
     ]
   },
-  // Add this to handle 404s at the server level
   async rewrites() {
     return {
       fallback: [
