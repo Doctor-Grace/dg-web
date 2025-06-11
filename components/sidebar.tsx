@@ -59,7 +59,6 @@ export function Sidebar({ className }: SidebarProps) {
 
   return (
     <>
-      {/* Mobile Sidebar */}
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetTrigger asChild>
           <Button variant="outline" size="icon" className="md:hidden">
@@ -107,7 +106,6 @@ export function Sidebar({ className }: SidebarProps) {
         </SheetContent>
       </Sheet>
 
-      {/* Desktop Sidebar */}
       <div className={cn("hidden md:flex md:flex-col h-screen border-r", className)}>
         <ScrollArea className="flex-1">
           <div className="flex flex-col gap-2 p-4">

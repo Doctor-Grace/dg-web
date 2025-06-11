@@ -32,7 +32,6 @@ export function VerificationPage() {
   const [activeTab, setActiveTab] = useState<string | null>(null)
 
   useEffect(() => {
-    // Verificar o status de validação em background
     authUseCase.canUseApplication()
 
     // Definir a aba ativa com base no que precisa ser verificado

@@ -848,7 +848,6 @@ const translations: Translations = {
     es: "Estudiante",
     en: "Student",
   },
-  // Adicionar as traduções para mostrar/esconder senha
   show_password: {
     pt: "Mostrar senha",
     es: "Mostrar contraseña",
@@ -1231,13 +1230,11 @@ const translations: Translations = {
     es: "Iniciar grabación",
     en: "Start recording",
   },
-  // Add the missing "chat" translation key
   chat: {
     pt: "Estudo de Caso",
     es: "Estudio de Caso",
     en: "Case Study",
   },
-  // Add any other missing keys here
   ai_chat_response: {
     pt: "Estou analisando sua mensagem. Como posso ajudar com mais informações médicas?",
     es: "Estoy analisando su mensaje. ¿Cómo puedo ayudar con más información médica?",

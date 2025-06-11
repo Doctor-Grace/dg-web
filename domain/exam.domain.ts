@@ -1,4 +1,3 @@
-// Tipos para FileControl
 export enum FileDestinationType {
   XrayExamination = "XrayExamination",
   TomographyExamination = "TomographyExamination",
@@ -22,7 +21,6 @@ export interface GetUrlForUploadResponse {
   error?: string
 }
 
-// Tipos para ExamAnalysis - CORRIGIDOS
 export interface ExamAnalysisRequestData {
   consumptionType: TokenConsumptionType
   imageIds: string[]
@@ -51,7 +49,6 @@ export interface ExamAnalysisResponse {
   error?: string
 }
 
-// Mapeamento de tipos de exame para FileDestinationType
 export const examTypeToDestination: Record<string, FileDestinationType> = {
   xray: FileDestinationType.XrayExamination,
   ct: FileDestinationType.TomographyExamination,
