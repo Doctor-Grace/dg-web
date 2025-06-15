@@ -61,3 +61,25 @@ export const examTypeToConsumption: Record<string, TokenConsumptionType> = {
   ct: TokenConsumptionType.TomographyExaminationAnalysis,
   mri: TokenConsumptionType.MagneticResonanceExaminationAnalysis,
 }
+
+export interface ExamHistoryItem {
+  id: string
+  examTypeDescription: string
+  createdAt: string
+}
+
+export interface ExamHistoryPager {
+  currentPage: number
+  pageSize: number
+  totalPages: number
+  totalRegistries: number
+}
+
+export interface ExamHistoryResponse {
+  data: {
+    exams: ExamHistoryItem[]
+    pager: ExamHistoryPager
+  }
+  hasError: boolean
+  error?: string
+}

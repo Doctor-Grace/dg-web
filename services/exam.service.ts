@@ -3,6 +3,7 @@ import type {
   GetUrlForUploadResponse,
   ExamAnalysisRequest,
   ExamAnalysisResponse,
+  ExamHistoryResponse,
   FileDestinationType,
   TokenConsumptionType,
 } from "@/domain/exam.domain";
@@ -79,6 +80,26 @@ export class ExamService {
 
       if (response.data.hasError) {
         throw new Error(response.data.error || "Erro na análise dos exames");
+      }
+
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async getExamHistory(page: number = 0, pageSize: number = 10): Promise<ExamHistoryResponse> {
+    try {
+      const response = await api.get<ExamHistoryResponse>(
+        `/api/v1/Exams/history?page=${page}&pageSize=${pageSize}`
+      );
+
+      if (!response.data) {
+        throw new Error("Resposta inválida do servidor");
+      }
+
+      if (response.data.hasError) {
+        throw new Error(response.data.error || "Erro ao buscar histórico de exames");
       }
 
       return response.data;

@@ -33,6 +33,7 @@ import {
 } from "@/domain/exam.domain";
 import { cn } from "@/lib/utils";
 import { Loader2, Upload, X } from "lucide-react";
+import { RecentAnalyses } from "@/components/recent-analyses";
 
 export function UnifiedAnalysis() {
   const router = useRouter();
@@ -240,145 +241,149 @@ export function UnifiedAnalysis() {
   };
 
   return (
-    <Card className="w-full">
-      <CardHeader>
-        <CardTitle>{t("exam_analysis")}</CardTitle>
-        <CardDescription>{t("select_exam_type_and_upload")}</CardDescription>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        <div className="space-y-2">
-          <label htmlFor="exam-type" className="text-sm font-medium">
-            {t("exam_type")}
-          </label>
-          <Select
-            value={examType}
-            onValueChange={handleExamTypeChange}
-            disabled={isChecking || !isVerified || isLoading}
-          >
-            <SelectTrigger id="exam-type" className="w-full">
-              <SelectValue placeholder={t("select_exam_type")} />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="xray">{t("xray")}</SelectItem>
-              <SelectItem value="mri">{t("mri")}</SelectItem>
-              <SelectItem value="ct">{t("tomography")}</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-
-        <div className="space-y-2">
-          <label htmlFor="reason" className="text-sm font-medium">
-            Motivo da solicitação do exame *
-          </label>
-          <Textarea
-            id="reason"
-            placeholder="Descreva o motivo da solicitação do exame (ex: dor abdominal, suspeita de fratura, etc.)"
-            value={reasonForRequestingExam}
-            onChange={(e) => setReasonForRequestingExam(e.target.value)}
-            disabled={isChecking || !isVerified || isLoading}
-            className="min-h-[80px]"
-          />
-        </div>
-
-        <div className="space-y-2">
-          <label className="text-sm font-medium">
-            Carregar imagens (máximo 10)
-          </label>
-          <div
-            className={cn(
-              "border-2 border-dashed rounded-lg p-6 text-center transition-colors",
-              isDragging
-                ? "border-primary bg-primary/5"
-                : "border-muted-foreground/20 hover:border-primary/50",
-              !isVerified || isLoading
-                ? "opacity-50 cursor-not-allowed"
-                : "cursor-pointer",
-              "relative"
-            )}
-            onDragOver={handleDragOver}
-            onDragLeave={handleDragLeave}
-            onDrop={handleDrop}
-            onClick={() =>
-              !isVerified || isLoading
-                ? checkAccess()
-                : document.getElementById("file-upload")?.click()
-            }
-          >
-            <input
-              id="file-upload"
-              type="file"
-              multiple
-              accept="image/*"
-              className="hidden"
-              onChange={handleFileChange}
+    <div>
+      <Card className="w-full">
+        <CardHeader>
+          <CardTitle>{t("exam_analysis")}</CardTitle>
+          <CardDescription>{t("select_exam_type_and_upload")}</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="space-y-2">
+            <label htmlFor="exam-type" className="text-sm font-medium">
+              {t("exam_type")}
+            </label>
+            <Select
+              value={examType}
+              onValueChange={handleExamTypeChange}
               disabled={isChecking || !isVerified || isLoading}
-            />
-            <div className="flex flex-col items-center justify-center gap-2">
-              <Upload className="h-10 w-10 text-muted-foreground" />
-              <p className="text-sm text-muted-foreground">
-                {t("drag_drop_or")}{" "}
-                <span className="text-primary font-medium">{t("browse")}</span>
-              </p>
-              <p className="text-xs text-muted-foreground">
-                {t("supported_formats")}
-              </p>
-            </div>
+            >
+              <SelectTrigger id="exam-type" className="w-full">
+                <SelectValue placeholder={t("select_exam_type")} />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="xray">{t("xray")}</SelectItem>
+                <SelectItem value="mri">{t("mri")}</SelectItem>
+                <SelectItem value="ct">{t("tomography")}</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
-        </div>
 
-        {files.length > 0 && (
+          <div className="space-y-2">
+            <label htmlFor="reason" className="text-sm font-medium">
+              Motivo da solicitação do exame *
+            </label>
+            <Textarea
+              id="reason"
+              placeholder="Descreva o motivo da solicitação do exame (ex: dor abdominal, suspeita de fratura, etc.)"
+              value={reasonForRequestingExam}
+              onChange={(e) => setReasonForRequestingExam(e.target.value)}
+              disabled={isChecking || !isVerified || isLoading}
+              className="min-h-[80px]"
+            />
+          </div>
+
           <div className="space-y-2">
             <label className="text-sm font-medium">
-              Imagens selecionadas ({files.length})
+              Carregar imagens (máximo 10)
             </label>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-              {files.map((file, index) => (
-                <div key={index} className="relative group">
-                  <img
-                    src={URL.createObjectURL(file) || "/placeholder.svg"}
-                    alt={`Uploaded ${index + 1}`}
-                    className="h-24 w-full object-cover rounded-md"
-                  />
-                  <button
-                    type="button"
-                    className="absolute top-1 right-1 bg-black/70 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"
-                    onClick={() => removeFile(index)}
-                    disabled={isChecking || !isVerified || isLoading}
-                  >
-                    <X className="h-4 w-4" />
-                  </button>
-                </div>
-              ))}
+            <div
+              className={cn(
+                "border-2 border-dashed rounded-lg p-6 text-center transition-colors",
+                isDragging
+                  ? "border-primary bg-primary/5"
+                  : "border-muted-foreground/20 hover:border-primary/50",
+                !isVerified || isLoading
+                  ? "opacity-50 cursor-not-allowed"
+                  : "cursor-pointer",
+                "relative"
+              )}
+              onDragOver={handleDragOver}
+              onDragLeave={handleDragLeave}
+              onDrop={handleDrop}
+              onClick={() =>
+                !isVerified || isLoading
+                  ? checkAccess()
+                  : document.getElementById("file-upload")?.click()
+              }
+            >
+              <input
+                id="file-upload"
+                type="file"
+                multiple
+                accept="image/*"
+                className="hidden"
+                onChange={handleFileChange}
+                disabled={isChecking || !isVerified || isLoading}
+              />
+              <div className="flex flex-col items-center justify-center gap-2">
+                <Upload className="h-10 w-10 text-muted-foreground" />
+                <p className="text-sm text-muted-foreground">
+                  {t("drag_drop_or")}{" "}
+                  <span className="text-primary font-medium">{t("browse")}</span>
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  {t("supported_formats")}
+                </p>
+              </div>
             </div>
           </div>
-        )}
 
-        {isLoading && (
-          <div className="space-y-2">
-            <div className="flex items-center justify-between text-sm">
-              <span>{currentStep}</span>
-              <span>{Math.round(uploadProgress)}%</span>
+          {files.length > 0 && (
+            <div className="space-y-2">
+              <label className="text-sm font-medium">
+                Imagens selecionadas ({files.length})
+              </label>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                {files.map((file, index) => (
+                  <div key={index} className="relative group">
+                    <img
+                      src={URL.createObjectURL(file) || "/placeholder.svg"}
+                      alt={`Uploaded ${index + 1}`}
+                      className="h-24 w-full object-cover rounded-md"
+                    />
+                    <button
+                      type="button"
+                      className="absolute top-1 right-1 bg-black/70 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"
+                      onClick={() => removeFile(index)}
+                      disabled={isChecking || !isVerified || isLoading}
+                    >
+                      <X className="h-4 w-4" />
+                    </button>
+                  </div>
+                ))}
+              </div>
             </div>
-            <Progress value={uploadProgress} className="w-full" />
-          </div>
-        )}
-      </CardContent>
-      <CardFooter>
-        <Button
-          className="w-full"
-          onClick={handleSubmit}
-          disabled={isLoading || isChecking || !isVerified}
-        >
-          {isLoading ? (
-            <>
-              <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-              {currentStep || t("processing")}...
-            </>
-          ) : (
-            t("analyze_images")
           )}
-        </Button>
-      </CardFooter>
-    </Card>
+
+          {isLoading && (
+            <div className="space-y-2">
+              <div className="flex items-center justify-between text-sm">
+                <span>{currentStep}</span>
+                <span>{Math.round(uploadProgress)}%</span>
+              </div>
+              <Progress value={uploadProgress} className="w-full" />
+            </div>
+          )}
+        </CardContent>
+        <CardFooter>
+          <Button
+            className="w-full"
+            onClick={handleSubmit}
+            disabled={isLoading || isChecking || !isVerified}
+          >
+            {isLoading ? (
+              <>
+                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                {currentStep || t("processing")}...
+              </>
+            ) : (
+              t("analyze_images")
+            )}
+          </Button>
+        </CardFooter>
+      </Card>
+
+      <RecentAnalyses isAnalysisPage={true} />
+    </div>
   );
 }
