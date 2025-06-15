@@ -11,10 +11,12 @@ export class ExamService {
   static async uploadFile(
     fileDestinationType: FileDestinationType,
     fileName: string,
+    file: File,
   ): Promise<GetUrlForUploadResponse> {
     try {
       console.log("Fazendo upload do arquivo:", fileName, "Tipo:", fileDestinationType)
 
+      // Passo 1: Obter URL de upload
       const response = await api.get<GetUrlForUploadResponse>(
         `/api/v1/FileControl/get-upload-url/${fileDestinationType}/${encodeURIComponent(fileName)}`,
       )
@@ -28,8 +30,22 @@ export class ExamService {
         throw new Error(response.data.error || "Erro ao fazer upload do arquivo")
       }
 
-      if (!response.data.data?.fileId) {
-        throw new Error("FileId não fornecido pelo servidor")
+      if (!response.data.data?.fileId || !response.data.data?.url) {
+        throw new Error("FileId ou URL de upload não fornecidos pelo servidor")
+      }
+
+      // Passo 2: Upload do arquivo para S3
+      console.log("Enviando arquivo para S3...")
+      const uploadResponse = await fetch(response.data.data.url, {
+        method: 'PUT',
+        body: file,
+        headers: {
+          'Content-Type': file.type,
+        },
+      })
+
+      if (!uploadResponse.ok) {
+        throw new Error(`Erro no upload para S3: ${uploadResponse.status} ${uploadResponse.statusText}`)
       }
 
       console.log("Upload concluído. FileId:", response.data.data.fileId)

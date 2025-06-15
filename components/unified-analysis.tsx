@@ -162,7 +162,7 @@ export function UnifiedAnalysis() {
         setUploadProgress(currentProgress)
         console.log(`Fazendo upload do arquivo ${i + 1}/${files.length}: ${file.name}`)
 
-        const uploadResponse = await ExamService.uploadFile(fileDestinationType, file.name)
+        const uploadResponse = await ExamService.uploadFile(fileDestinationType, file.name, file)
         imageIds.push(uploadResponse.data.fileId)
 
         console.log(`Upload ${i + 1} concluído. FileId:`, uploadResponse.data.fileId)
