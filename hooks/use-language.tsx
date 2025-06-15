@@ -1,16 +1,22 @@
-"use client"
+"use client";
 
-import { createContext, useContext, useState, useEffect, type ReactNode } from "react"
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  type ReactNode,
+} from "react";
 
-type Language = "pt" | "es" | "en"
+type Language = "pt" | "es" | "en";
 
 type Translations = {
   [key: string]: {
-    pt: string
-    es: string
-    en: string
-  }
-}
+    pt: string;
+    es: string;
+    en: string;
+  };
+};
 
 const translations: Translations = {
   login: {
@@ -598,11 +604,6 @@ const translations: Translations = {
     es: "Ocurrió un error al conectar con el servidor. Inténtelo de nuevo más tarde.",
     en: "An error occurred while connecting to the server. Please try again later.",
   },
-  invalid_verification_code: {
-    pt: "Código de verificação inválido.",
-    es: "Código de verificación inválido.",
-    en: "Invalid verification code.",
-  },
   user_not_found: {
     pt: "Usuário não encontrado. Por favor, tente novamente.",
     es: "Usuario no encontrado. Por favor, inténtelo de nuevo.",
@@ -693,11 +694,6 @@ const translations: Translations = {
     es: "Código de verificación reenviado a su teléfono.",
     en: "Verification code resent to your phone.",
   },
-  user_not_found: {
-    pt: "Usuário não encontrado. Por favor, tente novamente.",
-    es: "Usuario no encontrado. Por favor, inténtelo de nuevo.",
-    en: "User not found. Please try again.",
-  },
   reset_code_sent: {
     pt: "Enviamos um código de redefinição para o seu email.",
     es: "Hemos enviado un código de restablecimiento a su correo electrónico.",
@@ -747,21 +743,6 @@ const translations: Translations = {
     pt: "Digite o código de redefinição recebido por email e sua nova senha.",
     es: "Ingrese el código de restablecimiento recibido por correo electrónico y su nueva contraseña.",
     en: "Enter the reset code received by email and your new password.",
-  },
-  error_title: {
-    pt: "Erro",
-    es: "Error",
-    en: "Error",
-  },
-  error: {
-    pt: "Erro",
-    es: "Error",
-    en: "Error",
-  },
-  server_error: {
-    pt: "Ocorreu um erro ao conectar com o servidor. Tente novamente mais tarde.",
-    es: "Ocurrió un error al conectar con el servidor. Inténtelo de nuevo más tarde.",
-    en: "An error occurred while connecting to the server. Please try again later.",
   },
   patient_info_optional: {
     pt: "Informações do Paciente (opcional)",
@@ -878,26 +859,6 @@ const translations: Translations = {
     es: "Su teléfono ya ha sido verificado",
     en: "Your phone has already been verified",
   },
-  email_verified: {
-    pt: "Email verificado com sucesso!",
-    es: "¡Email verificado con éxito!",
-    en: "Email successfully verified!",
-  },
-  sms_verified: {
-    pt: "SMS verificado com sucesso!",
-    es: "¡SMS verificado con éxito!",
-    en: "SMS successfully verified!",
-  },
-  activation_email_sent: {
-    pt: "Email de ativação enviado com sucesso",
-    es: "Email de activación enviado con éxito",
-    en: "Activation email sent successfully",
-  },
-  activation_sms_sent: {
-    pt: "SMS de ativação enviado com sucesso",
-    es: "SMS de activación enviado con éxito",
-    en: "Activation SMS sent successfully",
-  },
   error_checking_application_access: {
     pt: "Erro ao verificar acesso à aplicação",
     es: "Error al verificar el acceso a la aplicación",
@@ -957,11 +918,6 @@ const translations: Translations = {
     pt: "navegue",
     es: "navegue",
     en: "browse",
-  },
-  max_10_images: {
-    pt: "máximo 10 imagens",
-    es: "máximo 10 imágenes",
-    en: "maximum 10 images",
   },
   selected_images: {
     pt: "Imagens selecionadas",
@@ -1400,17 +1356,11 @@ const translations: Translations = {
     es: "Actualice su contraseña",
     en: "Update your password",
   },
-  password_changed: {
-    pt: "Senha alterada com sucesso",
-    es: "Contraseña cambiada con éxito",
-    en: "Password changed successfully",
-  },
   auto_login_failed: {
     pt: "Login automático falhou. Por favor, faça login manualmente.",
     es: "El inicio de sesión automático falló. Por favor, inicie sesión manualmente.",
     en: "Automatic login failed. Please log in manually.",
   },
-  // Adicionando as traduções que estão faltando para o modal de logout
   logout_confirmation_title: {
     pt: "Confirmar Saída",
     es: "Confirmar Salida",
@@ -1426,57 +1376,68 @@ const translations: Translations = {
     es: "Sí, salir",
     en: "Yes, log out",
   },
-}
+};
 
 type LanguageContextType = {
-  language: Language
-  setLanguage: (lang: Language) => void
-  t: (key: string, params?: Record<string, string>) => string
-}
+  language: Language;
+  setLanguage: (lang: Language) => void;
+  t: (key: string, params?: Record<string, string>) => string;
+};
 
-const LanguageContext = createContext<LanguageContextType | undefined>(undefined)
+const LanguageContext = createContext<LanguageContextType | undefined>(
+  undefined
+);
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [language, setLanguage] = useState<Language>("pt")
+  const [language, setLanguage] = useState<Language>("pt");
 
   useEffect(() => {
-    const savedLanguage = localStorage.getItem("language") as Language
-    if (savedLanguage && (savedLanguage === "pt" || savedLanguage === "es" || savedLanguage === "en")) {
-      setLanguage(savedLanguage)
+    const savedLanguage = localStorage.getItem("language") as Language;
+    if (
+      savedLanguage &&
+      (savedLanguage === "pt" ||
+        savedLanguage === "es" ||
+        savedLanguage === "en")
+    ) {
+      setLanguage(savedLanguage);
     }
-  }, [])
+  }, []);
 
   const changeLanguage = (lang: Language) => {
-    setLanguage(lang)
-    localStorage.setItem("language", lang)
-  }
+    setLanguage(lang);
+    localStorage.setItem("language", lang);
+  };
 
   const t = (key: string, params?: Record<string, string>): string => {
     if (!translations[key]) {
-      return key
+      return key;
     }
 
-    let text = translations[key][language]
+    let text = translations[key][language];
 
     // Replace parameters if they exist
     if (params) {
       Object.entries(params).forEach(([paramKey, paramValue]) => {
-        text = text.replace(`{{${paramKey}}}`, paramValue)
-      })
+        text = text.replace(`{{${paramKey}}}`, paramValue);
+      });
     }
 
-    return text
-  }
+    return text;
+  };
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage: changeLanguage, t }}>{children}</LanguageContext.Provider>
-  )
+    <LanguageContext.Provider
+      value={{ language, setLanguage: changeLanguage, t }}
+    >
+      {children}
+    </LanguageContext.Provider>
+  );
 }
 
 export function useLanguage() {
-  const context = useContext(LanguageContext)
+  const context = useContext(LanguageContext);
   if (context === undefined) {
-    throw new Error("useLanguage must be used within a LanguageProvider")
+    throw new Error("useLanguage must be used within a LanguageProvider");
   }
-  return context
+  return context;
 }
