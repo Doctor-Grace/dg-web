@@ -28,6 +28,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { useMediaQuery } from "@/hooks/use-media-query"
 import Link from "next/link"
 import { PageTransition } from "@/components/page-transition"
+import { RecentAnalyses } from "@/components/recent-analyses"
 
 interface DashboardLayoutProps {
   children: ReactNode
@@ -206,39 +207,9 @@ const Sidebar = memo(function Sidebar() {
                       {!isCollapsed && textVisible && t("back")}
                     </Button>
                   </motion.div>
-                  {!isCollapsed && textVisible && isAnalysisPage && (
-                    <div className="mt-4 px-3">
-                      <h3 className="text-sm font-medium text-primary mb-2">{t("recent_analyses")}</h3>
-                      <div className="space-y-3">
-                        <motion.div
-                          className="flex items-center gap-2 text-sm text-muted-foreground"
-                          whileHover={{ x: 5, color: "#2A5B64" }}
-                        >
-                          <FileImage className="h-4 w-4" />
-                          <span>Raio-X Tórax (Hoje)</span>
-                        </motion.div>
-                        <motion.div
-                          className="flex items-center gap-2 text-sm text-muted-foreground"
-                          whileHover={{ x: 5, color: "#2A5B64" }}
-                        >
-                          <FileImage className="h-4 w-4" />
-                          <span>Ressonância Cerebral (Hoje)</span>
-                        </motion.div>
-                        <motion.div
-                          className="flex items-center gap-2 text-sm text-muted-foreground"
-                          whileHover={{ x: 5, color: "#2A5B64" }}
-                        >
-                          <FileImage className="h-4 w-4" />
-                          <span>Tomografia Abdominal (Ontem)</span>
-                        </motion.div>
-                        <motion.div
-                          className="flex items-center gap-2 text-sm text-muted-foreground"
-                          whileHover={{ x: 5, color: "#2A5B64" }}
-                        >
-                          <FileImage className="h-4 w-4" />
-                          <span>Raio-X Coluna (Ontem)</span>
-                        </motion.div>
-                      </div>
+                  {isAnalysisPage && (
+                    <div className="mt-4">
+                      <RecentAnalyses isAnalysisPage={true} />
                     </div>
                   )}
                 </nav>
@@ -514,26 +485,8 @@ const MobileSidebar = memo(function MobileSidebar() {
                       {t("back")}
                     </Button>
                     {isAnalysisPage && (
-                      <div className="mt-4 px-3">
-                        <h3 className="text-sm font-medium text-primary mb-2">{t("recent_analyses")}</h3>
-                        <div className="space-y-3">
-                          <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                            <FileImage className="h-4 w-4" />
-                            <span>Raio-X Tórax (Hoje)</span>
-                          </div>
-                          <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                            <FileImage className="h-4 w-4" />
-                            <span>Ressonância Cerebral (Hoje)</span>
-                          </div>
-                          <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                            <FileImage className="h-4 w-4" />
-                            <span>Tomografia Abdominal (Ontem)</span>
-                          </div>
-                          <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                            <FileImage className="h-4 w-4" />
-                            <span>Raio-X Coluna (Ontem)</span>
-                          </div>
-                        </div>
+                      <div className="mt-4">
+                        <RecentAnalyses isAnalysisPage={true} />
                       </div>
                     )}
                   </nav>

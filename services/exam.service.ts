@@ -91,7 +91,7 @@ export class ExamService {
   static async getExamHistory(page: number = 0, pageSize: number = 10): Promise<ExamHistoryResponse> {
     try {
       const response = await api.get<ExamHistoryResponse>(
-        `/api/v1/Exams/history?page=${page}&pageSize=${pageSize}`
+        `/api/v1/Exams/list?page=${page}&pageSize=${pageSize}`
       );
 
       if (!response.data) {

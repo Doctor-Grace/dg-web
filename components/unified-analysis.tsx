@@ -33,7 +33,6 @@ import {
 } from "@/domain/exam.domain";
 import { cn } from "@/lib/utils";
 import { Loader2, Upload, X } from "lucide-react";
-import { RecentAnalyses } from "@/components/recent-analyses";
 
 export function UnifiedAnalysis() {
   const router = useRouter();
@@ -382,8 +381,6 @@ export function UnifiedAnalysis() {
           </Button>
         </CardFooter>
       </Card>
-
-      <RecentAnalyses isAnalysisPage={true} />
     </div>
   );
 }
